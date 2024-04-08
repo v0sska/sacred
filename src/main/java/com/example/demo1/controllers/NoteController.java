@@ -1,0 +1,300 @@
+package com.example.demo1.controllers;
+
+import com.example.demo1.HelloApplication;
+import com.example.demo1.entity.Rate;
+import com.example.demo1.RecordAudioForm;
+import com.example.demo1.entity.Note;
+import com.example.demo1.service.NoteDBService;
+import com.example.demo1.service.Reader;
+import com.example.demo1.service.StyleService;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Line;
+import javafx.stage.Stage;
+
+import javax.sound.sampled.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class NoteController {
+
+    @FXML
+    private TextArea textArea;
+
+    @FXML
+    private ImageView badRates;
+
+    @FXML
+    private ImageView microphone;
+
+    @FXML
+    private ImageView normalRates;
+
+    @FXML
+    private ImageView goodRates;
+
+    @FXML
+    private ImageView arrow;
+
+    private Note noteEntity = new Note();
+
+    @FXML
+    private Label saveNoteLabel;
+
+    private StyleService styleService = new StyleService();
+
+    @FXML
+    private AnchorPane anchorPane;
+
+    private Line indicatorLine;
+
+   private RecordAudioForm audioForm = new RecordAudioForm();
+
+    private Reader reader = new Reader();
+
+    private NoteDBService service = new NoteDBService();
+
+    private String name;
+    private String path;
+
+   // private String notePath = "";
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    public void initialize() {
+        // Встановлення коліру фону для TextArea
+        textArea.setStyle("-fx-control-inner-background: #686f7a;");
+        textArea.setWrapText(true);
+        saveNoteLabel.setOpacity(0.0);
+        // Інші дії для ініціалізації, які можуть бути потрібні
+    }
+
+
+    public void writeButton(ActionEvent actionEvent) throws IOException {
+
+        String note = textArea.getText();
+
+        String mainPath = getPath();
+
+        String notesMainPath = reader.createMainDirectory(mainPath); //Метод для створення до нотатки папки sacred для простішого знаходження
+
+        String readFile = Reader.readConfigMemoryFile(); //Метод для зчитування шляху з файлу
+
+        String noteName = getName();
+
+       String notePath = "";
+
+        if(readFile != null && !readFile.isEmpty()){
+            notesMainPath = readFile; // Призначення основної папки,якщо існує документ з шляхом
+             notePath = reader.createNoteDirectory(notesMainPath, name);//Метод,що додає до імені запису папку для простішої індексації
+        }
+        else {
+            try {
+               reader.saveConfigMemoryFile(notesMainPath);// метод для збереження в памʼяті основного шляху до папки
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        System.out.println(mainPath);
+
+        //Перевірка чи ця нотатка відкривалась з головного меню чи створювалась
+        if(service.noteExists(path)){
+            notePath = reader.createNoteDirectory(path, name);
+            reader.writeAndSave(note, name, notePath);
+            styleService.fadeInLabel(saveNoteLabel);
+        } else {
+            reader.writeAndSave(note, noteName, notePath);
+            audioForm.setPath(notePath);
+
+           // Note noteEntity = new Note();
+            noteEntity.setName(noteName);
+            noteEntity.setPath(notesMainPath);
+
+            service.saveNote(noteEntity); //збереження шляху і назви до бази даних
+            styleService.fadeInLabel(saveNoteLabel);
+        }
+    }
+
+    //Метод для прослуховування аудіо
+    public void viewAudio(){
+
+        File audioFile = new File( path + "/" + name + "/sacred_audio.wav"); // аудіо файл
+        if (audioFile.exists()) { //Перевірка чи існує аудіо файл і якщо він існує то тоді показується блок з аудіо
+            Pane pane = new Pane();
+
+            pane.setLayoutX(26);
+            pane.setLayoutY(338);
+            pane.setPrefHeight(48);
+            pane.setPrefWidth(200);
+
+            Button playButton = new Button("Відтворити");
+            playButton.setLayoutX(80);
+            playButton.setLayoutY(21);
+
+            playButton.setOnAction(e -> {
+                try {
+                    playAudio(audioFile);
+                    indicatorLine.setVisible(true);
+                } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
+                    ex.printStackTrace();
+                }
+            });
+
+            indicatorLine = new Line(-100, 14, 100, 14);
+            indicatorLine.setStroke(Color.WHITE);
+            indicatorLine.setVisible(false);
+
+
+            pane.getChildren().addAll(playButton, indicatorLine);
+            anchorPane.getChildren().add(pane);
+        } else {
+            System.out.println("Файл не існує");
+        }
+
+    }
+
+    //Метод для відкриття нотатки
+    public void openNote(String path, String name){
+        try {
+            // Read text from the document
+            BufferedReader reader = new BufferedReader(new FileReader(path + "/" + name + "/" + name + ".txt"));
+            StringBuilder content = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append("\n");
+            }
+            reader.close();
+
+            // Display the content of the document in the TextArea
+            textArea.setText(content.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //Метод який відкриває RecordAudioForm
+    public void recordAudio(MouseEvent mouseEvent) throws Exception {
+        Stage stage = new Stage();
+        audioForm.start(stage);
+    }
+
+    //Метод для програвання аудіо в формі
+    private void playAudio(File file) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
+        AudioFormat format = audioInputStream.getFormat();
+        DataLine.Info info = new DataLine.Info(Clip.class, format);
+        Clip clip = (Clip) AudioSystem.getLine(info);
+        clip.open(audioInputStream);
+        clip.start();
+
+        //Потік який контолює лінію,яка йде поки грає аудіо
+        Thread indicatorThread = new Thread(() -> {
+            try {
+                while (clip.isOpen() && clip.getMicrosecondPosition() < clip.getMicrosecondLength()) {
+                    double percentagePlayed = (double) clip.getMicrosecondPosition() / clip.getMicrosecondLength();
+                    updateIndicator(percentagePlayed);
+                    Thread.sleep(100);
+                }
+                updateIndicator(1.0);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+        indicatorThread.start();
+    }
+
+    //Метод для оновлення позиції індикатора(лінії)
+    private void updateIndicator(double percentage) {
+        double width = indicatorLine.getParent().getLayoutBounds().getWidth();
+        double x = width * percentage;
+        indicatorLine.setEndX(x);
+    }
+
+    //Методи для оцінювання нотаток
+    public void badRateClick(MouseEvent mouseEvent) {
+        noteEntity.setRate(Rate.BAD.name());
+    }
+
+    public void normalRateClick(MouseEvent mouseEvent) {
+        noteEntity.setRate(Rate.NORMAL.name());
+    }
+
+    public void goodRateClick(MouseEvent mouseEvent) {
+        noteEntity.setRate(Rate.GOOD.name());
+    }
+
+    public void goodRatesAnimationEnd(MouseEvent mouseEvent) {
+        styleService.transitionFinish(goodRates);
+    }
+
+    public void goodRatesAnimationStart(MouseEvent mouseEvent) {
+        styleService.transitionStart(goodRates);
+    }
+
+    public void normalRatesAnimationStart(MouseEvent mouseEvent) {
+        styleService.transitionStart(normalRates);
+    }
+
+    public void normalRatesAnimationEnd(MouseEvent mouseEvent) {
+        styleService.transitionFinish(normalRates);
+    }
+
+    public void badRatesAnimationEnd(MouseEvent mouseEvent) {
+        styleService.transitionFinish(badRates);
+    }
+
+    public void badRatesAnimationStart(MouseEvent mouseEvent) {
+        styleService.transitionStart(badRates);
+    }
+
+    public void arrowAnimationStart(MouseEvent mouseEvent) {
+        styleService.transitionStart(arrow);
+    }
+
+    public void backToMainForm(MouseEvent mouseEvent) throws IOException {
+        HelloApplication application = new HelloApplication();
+
+        Stage stage = new Stage();
+
+        application.start(stage);
+    }
+
+    public void arrowAnimationEnd(MouseEvent mouseEvent) {
+        styleService.transitionFinish(arrow);
+    }
+
+    public void micAnimationStart(MouseEvent mouseEvent) {
+        styleService.transitionStart(microphone);
+    }
+
+    public void micAnimationEnd(MouseEvent mouseEvent) {
+        styleService.transitionFinish(microphone);
+    }
+
+    //TODO зробити інтерфейс для Reader і StyleService і перенести вже нарешті цю всю єбанину на sacredProj і покомітити це все красиво
+}

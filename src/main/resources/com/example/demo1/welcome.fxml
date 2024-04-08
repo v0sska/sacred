@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+
+<AnchorPane fx:id="anchorRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #686f7a;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.controllers.WelcomeController">
+   <children>
+      <Label fx:id="writeNoteButton" />
+      <Button fx:id="createButton" layoutX="324.0" layoutY="14.0" mnemonicParsing="false" onAction="#openNoteForm" onMouseEntered="#transitionStart" onMouseExited="#transitionFinish" style="-fx-background-color: #686f7a; -fx-border-color: white;" text="+" textFill="WHITE" />
+<!--      <Label fx:id="chooseDirectoryButton" />-->
+<!--      <Button layoutX="464.0" layoutY="14.0" mnemonicParsing="false" onAction="#chooseDirectory" style="-fx-background-color: #686f7a; -fx-border-color: white;" text="Choose a directory" textFill="WHITE" />-->
+      <ImageView fx:id="badRates" fitHeight="17.0" fitWidth="17.0" layoutX="430.0" layoutY="15.0" onMouseClicked="#showBadRateNotes" onMouseEntered="#badRatesAnimationStart" onMouseExited="#badRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/sad-face.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="normalRates" fitHeight="17.0" fitWidth="17.0" layoutX="395.0" layoutY="15.0" onMouseClicked="#showNormalRateNotes" onMouseEntered="#normalRatesAnimationStart" onMouseExited="#normalRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/emoticon.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="goodRates" fitHeight="17.0" fitWidth="27.0" layoutX="361.0" layoutY="15.0" onMouseClicked="#showGoodRatesNotes" onMouseEntered="#goodRatesAnimationStart" onMouseExited="#goodRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/happy-face.png" />
+         </image>
+      </ImageView>
+      <Line fx:id="topLine" endX="499.0" layoutX="101.0" layoutY="56.0" startX="-100.0" stroke="WHITE" />
+      <Label fx:id="goodRateLabel" alignment="CENTER" layoutX="356.0" layoutY="34.0" prefHeight="17.0" prefWidth="27.0" textFill="WHITE" />
+      <Label fx:id="normalRateLabel" alignment="CENTER" layoutX="390.0" layoutY="34.0" prefHeight="17.0" prefWidth="27.0" textFill="#fffefe" />
+      <Label fx:id="badRateLabel" alignment="CENTER" layoutX="425.0" layoutY="34.0" prefHeight="17.0" prefWidth="27.0" textFill="WHITE" />
+      <Line fx:id="bottomLine" endX="678.0" endY="286.0" layoutX="-78.0" layoutY="62.0" startX="78.79289245605469" startY="286.0" stroke="WHITE" />
+      <Label layoutX="285.0" layoutY="369.0" text="Sacred" textFill="WHITE" />
+      <ImageView fx:id="folder" fitHeight="45.0" fitWidth="53.0" layoutX="453.0" layoutY="7.0" onMouseClicked="#chooseDirectory" onMouseEntered="#folderAnimationStart" onMouseExited="#folderAnimationEnd" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/folder-ico.png" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
