@@ -28,4 +28,6 @@ public interface INoteDBService {
 
     List<String> getNoteNameByBadRate();
 
+    String getImagePathByName(String name);
+
 }

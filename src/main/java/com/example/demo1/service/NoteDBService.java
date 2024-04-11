@@ -204,4 +204,21 @@ public class NoteDBService implements INoteDBService {
         return names;
     }
 
+    @Override
+    public String getImagePathByName(String name) {
+        String imagePath = null;
+
+        Session session = factory.openSession();
+
+
+        Query<String> noteQuery = session.createQuery("SELECT imagePath FROM Note WHERE name = :name ", String.class);
+        noteQuery.setParameter("name", name);
+        imagePath = String.valueOf(noteQuery.uniqueResult());
+        session.close();
+
+        System.out.println(imagePath);
+        return imagePath;
+    }
+
+
 }
