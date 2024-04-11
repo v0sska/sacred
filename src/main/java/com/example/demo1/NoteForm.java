@@ -23,7 +23,7 @@ public class NoteForm extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(NoteForm.class.getResource("noteForm.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 400);
+        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

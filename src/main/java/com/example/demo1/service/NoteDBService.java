@@ -1,7 +1,7 @@
 package com.example.demo1.service;
 
 import com.example.demo1.entity.Note;
-import com.example.demo1.entity.Person;
+import com.example.demo1.interfaces.INoteDBService;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,18 +11,19 @@ import org.hibernate.query.Query;
 
 import java.util.List;
 
-public class NoteDBService {
+public class NoteDBService implements INoteDBService {
 
     private final SessionFactory factory;
 
     public NoteDBService() {
         this.factory = new Configuration()
                 .configure()
-                .addAnnotatedClass(Person.class)
+                .addAnnotatedClass(Note.class)
                 .buildSessionFactory();
     }
 
 
+    @Override
     public void saveNote(Note note){
         Session session = factory.openSession();
         Transaction transaction = null;
@@ -46,6 +47,7 @@ public class NoteDBService {
         }
     }
 
+    @Override
     public List<String> getNoteName(){
         List<String> names = null;
 
@@ -60,12 +62,13 @@ public class NoteDBService {
         return names;
     }
 
+    @Override
     public String getNotePathByName(String name){
         String path = null;
 
         Session session = factory.openSession();
 
-        org.hibernate.Query<String> noteQuery = session.createQuery("SELECT path FROM Note WHERE name = :name ", String.class);
+        Query<String> noteQuery = session.createQuery("SELECT path FROM Note WHERE name = :name ", String.class);
         noteQuery.setParameter("name", name);
         path = String.valueOf(noteQuery.uniqueResult());
         session.close();
@@ -74,6 +77,7 @@ public class NoteDBService {
         return path;
     }
 
+    @Override
     public void clearData(){
         Session session = factory.openSession();
 
@@ -87,6 +91,7 @@ public class NoteDBService {
 
 
     // Перевіряє, чи існує нотатка з вказаним шляхом в базі даних
+    @Override
        public boolean noteExists(String path) {
         Session session = factory.openSession();
         boolean exists = false;
@@ -115,6 +120,7 @@ public class NoteDBService {
         return exists;
     }
 
+    @Override
     public Long getCountByGoodRate(){
         Session session = factory.openSession();
 
@@ -127,6 +133,7 @@ public class NoteDBService {
         return goodCount;
     }
 
+    @Override
     public Long getCountByNormalRate(){
         Session session = factory.openSession();
 
@@ -139,6 +146,7 @@ public class NoteDBService {
         return normalCount;
     }
 
+    @Override
     public Long getCountByBadRate(){
         Session session = factory.openSession();
 
@@ -151,6 +159,7 @@ public class NoteDBService {
         return badCount;
     }
 
+    @Override
     public List<String> getNoteNameByGoodRate(){
          List<String> names = null;
 
@@ -165,6 +174,7 @@ public class NoteDBService {
          return names;
     }
 
+    @Override
     public List<String> getNoteNameByNormalRate(){
         List<String> names = null;
 
@@ -179,6 +189,7 @@ public class NoteDBService {
         return names;
     }
 
+    @Override
     public List<String> getNoteNameByBadRate(){
         List<String> names = null;
 

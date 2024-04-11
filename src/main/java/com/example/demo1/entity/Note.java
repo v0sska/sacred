@@ -17,12 +17,15 @@ public class Note {
 
     private String rate;
 
+    private String imagePath;
+
     public Note() {}
 
-    public Note(String name, String path, String rate) {
+    public Note(String name, String path, String rate, String imagePath) {
         this.name = name;
         this.path = path;
         this.rate = rate;
+        this.imagePath = imagePath;
     }
 
     public Long getId() {
@@ -49,15 +52,15 @@ public class Note {
         this.path = path;
     }
 
-//    public Rate getRate() {
-//        return rate;
-//    }
-//
-//    public void setRate(Rate rate) {
-//        this.rate = rate;
-//    }
-//
     public void setRate(String rate) {
         this.rate = String.valueOf(Rate.valueOf(rate)); // Отримання enum з рядкового значення
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
     }
 }

@@ -1,2 +1,4 @@
-package com.example.demo1.interfaces;public interface IStyleService {
+package com.example.demo1.interfaces;
+
+public interface IStyleService {
 }

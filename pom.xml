@@ -64,6 +64,8 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.openpnp/opencv -->
+
     </dependencies>
 
     <build>

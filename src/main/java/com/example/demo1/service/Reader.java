@@ -1,11 +1,13 @@
 package com.example.demo1.service;
 
+import com.example.demo1.interfaces.IReader;
+
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Reader {
+public class Reader implements IReader {
     private File files;
 
     public void writeAndSave(String note, String name, String path) throws IOException {

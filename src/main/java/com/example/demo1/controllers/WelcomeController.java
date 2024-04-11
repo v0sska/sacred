@@ -2,6 +2,7 @@ package com.example.demo1.controllers;
 
 import com.example.demo1.NoteForm;
 import com.example.demo1.entity.Note;
+import com.example.demo1.interfaces.INoteDBService;
 import com.example.demo1.service.NoteDBService;
 import com.example.demo1.service.StyleService;
 import com.mysql.cj.protocol.x.XProtocolRow;
@@ -64,7 +65,9 @@ public class WelcomeController {
 
    private GridPane gridPane;
 
-   private NoteDBService service = new NoteDBService();
+  // private NoteDBService service = new NoteDBService();
+
+    private INoteDBService service = new NoteDBService();
 
    @FXML
    private Line bottomLine;

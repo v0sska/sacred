@@ -2,6 +2,7 @@ package com.example.demo1;
 
 import com.example.demo1.controllers.NoteButtons;
 import com.example.demo1.controllers.WelcomeController;
+import com.example.demo1.interfaces.INoteDBService;
 import com.example.demo1.service.NoteDBService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +18,7 @@ import java.util.List;
 public class HelloApplication extends Application {
 
 
-    private NoteDBService service = new NoteDBService();
+    private INoteDBService service = new NoteDBService();
 
     private List<String> notes = service.getNoteName();
 

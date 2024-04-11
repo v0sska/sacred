@@ -4,6 +4,9 @@ import com.example.demo1.HelloApplication;
 import com.example.demo1.entity.Rate;
 import com.example.demo1.RecordAudioForm;
 import com.example.demo1.entity.Note;
+import com.example.demo1.interfaces.INoteDBService;
+import com.example.demo1.interfaces.IReader;
+import com.example.demo1.service.AudioService;
 import com.example.demo1.service.NoteDBService;
 import com.example.demo1.service.Reader;
 import com.example.demo1.service.StyleService;
@@ -12,8 +15,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -21,15 +28,16 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import javax.sound.sampled.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 
 public class NoteController {
 
     @FXML
     private TextArea textArea;
+
+    @FXML
+    private ImageView imageDrop;
+
 
     @FXML
     private ImageView badRates;
@@ -60,9 +68,11 @@ public class NoteController {
 
    private RecordAudioForm audioForm = new RecordAudioForm();
 
-    private Reader reader = new Reader();
+    //private Reader reader = new Reader();
 
-    private NoteDBService service = new NoteDBService();
+    private IReader reader = new Reader();
+
+    private INoteDBService service = new NoteDBService();
 
     private String name;
     private String path;
@@ -158,7 +168,8 @@ public class NoteController {
 
             playButton.setOnAction(e -> {
                 try {
-                    playAudio(audioFile);
+                    AudioService audioService = new AudioService();
+                    audioService.playAudio(audioFile, indicatorLine);
                     indicatorLine.setVisible(true);
                 } catch (IOException | UnsupportedAudioFileException | LineUnavailableException ex) {
                     ex.printStackTrace();
@@ -203,37 +214,7 @@ public class NoteController {
         audioForm.start(stage);
     }
 
-    //Метод для програвання аудіо в формі
-    private void playAudio(File file) throws IOException, UnsupportedAudioFileException, LineUnavailableException {
-        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(file);
-        AudioFormat format = audioInputStream.getFormat();
-        DataLine.Info info = new DataLine.Info(Clip.class, format);
-        Clip clip = (Clip) AudioSystem.getLine(info);
-        clip.open(audioInputStream);
-        clip.start();
 
-        //Потік який контолює лінію,яка йде поки грає аудіо
-        Thread indicatorThread = new Thread(() -> {
-            try {
-                while (clip.isOpen() && clip.getMicrosecondPosition() < clip.getMicrosecondLength()) {
-                    double percentagePlayed = (double) clip.getMicrosecondPosition() / clip.getMicrosecondLength();
-                    updateIndicator(percentagePlayed);
-                    Thread.sleep(100);
-                }
-                updateIndicator(1.0);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        indicatorThread.start();
-    }
-
-    //Метод для оновлення позиції індикатора(лінії)
-    private void updateIndicator(double percentage) {
-        double width = indicatorLine.getParent().getLayoutBounds().getWidth();
-        double x = width * percentage;
-        indicatorLine.setEndX(x);
-    }
 
     //Методи для оцінювання нотаток
     public void badRateClick(MouseEvent mouseEvent) {
@@ -296,5 +277,28 @@ public class NoteController {
         styleService.transitionFinish(microphone);
     }
 
+    public void imageDrop(DragEvent dragEvent) {
+
+        Dragboard dragboard = dragEvent.getDragboard();
+        if(dragboard.hasImage() || dragboard.hasFiles()){
+            try {
+                imageDrop.setImage(new Image(new FileInputStream(dragboard.getFiles().get(0))));
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        dragEvent.consume();
+    }
+
+    public void imageDropped(DragEvent dragEvent) {
+        Dragboard dragboard = dragEvent.getDragboard();
+        if(dragboard.hasImage() || dragboard.hasFiles()){
+            dragEvent.acceptTransferModes(TransferMode.COPY);
+        }
+
+        dragEvent.consume();
+    }
+
     //TODO зробити інтерфейс для Reader і StyleService і перенести вже нарешті цю всю єбанину на sacredProj і покомітити це все красиво
+    //TODO зробити в entity нове поле для шляху картинки і після відкриття нотатки з бази вигружати шлях для нього
 }

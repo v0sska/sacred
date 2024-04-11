@@ -130,5 +130,11 @@ public class Main {
         NoteDBService service = new NoteDBService();
 
         service.clearData();
+
+
+
+
+
     }
+
 }

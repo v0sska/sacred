@@ -7,38 +7,39 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #686f7a;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.controllers.NoteController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" style="-fx-background-color: #686f7a;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.controllers.NoteController">
    <children>
-      <TextArea fx:id="textArea" layoutX="14.0" layoutY="14.0" prefHeight="300.0" prefWidth="570.0" style="-fx-border-color: #686f7a; -fx-text-box-border: transparent; -fx-highlight-fill: #686f7a; -fx-highlight-text-fill: white;" />
-      <Button layoutX="247.0" layoutY="337.0" mnemonicParsing="false" onAction="#writeButton" style="-fx-background-color: #686f7a; -fx-border-color: white;" text="Complete a note" textFill="WHITE" />
+      <TextArea fx:id="textArea" layoutX="18.0" layoutY="15.0" prefHeight="300.0" prefWidth="666.0" style="-fx-border-color: #686f7a; -fx-text-box-border: transparent; -fx-highlight-fill: #686f7a; -fx-highlight-text-fill: white;" />
+      <Button layoutX="297.0" layoutY="449.0" mnemonicParsing="false" onAction="#writeButton" style="-fx-background-color: #686f7a; -fx-border-color: white;" text="Complete a note" textFill="WHITE" />
 <!--      <Button layoutX="362.0" layoutY="338.0" mnemonicParsing="false" onAction="#recordAudio" text="Record" />-->
 <!--      <Button fx:id="badRateBtn" layoutX="561.0" layoutY="338.0" mnemonicParsing="false" onAction="#badRateClick" prefHeight="26.0" prefWidth="25.0" text="B" />-->
 <!--      <Button fx:id="normalRateBTn" layoutX="529.0" layoutY="338.0" mnemonicParsing="false" onAction="#normalRateClick" prefHeight="26.0" prefWidth="26.0" text="N" />-->
 <!--      <Button fx:id="goodRateBTN" layoutX="494.0" layoutY="338.0" mnemonicParsing="false" onAction="#goodRateClick" prefHeight="26.0" prefWidth="26.0" text="G" />-->
-      <ImageView fx:id="badRates" fitHeight="28.0" fitWidth="26.0" layoutX="560.0" layoutY="337.0" onMouseClicked="#badRateClick" onMouseEntered="#badRatesAnimationStart" onMouseExited="#badRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="badRates" fitHeight="28.0" fitWidth="26.0" layoutX="560.0" layoutY="450.0" onMouseClicked="#badRateClick" onMouseEntered="#badRatesAnimationStart" onMouseExited="#badRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/sad-face.png" />
          </image></ImageView>
-      <ImageView fx:id="normalRates" fitHeight="28.0" fitWidth="26.0" layoutX="525.0" layoutY="336.0" onMouseClicked="#normalRateClick" onMouseEntered="#normalRatesAnimationStart" onMouseExited="#normalRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="normalRates" fitHeight="28.0" fitWidth="26.0" layoutX="525.0" layoutY="450.0" onMouseClicked="#normalRateClick" onMouseEntered="#normalRatesAnimationStart" onMouseExited="#normalRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/emoticon.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="goodRates" fitHeight="28.0" fitWidth="26.0" layoutX="491.0" layoutY="336.0" onMouseClicked="#goodRateClick" onMouseEntered="#goodRatesAnimationStart" onMouseExited="#goodRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="goodRates" fitHeight="28.0" fitWidth="26.0" layoutX="489.0" layoutY="450.0" onMouseClicked="#goodRateClick" onMouseEntered="#goodRatesAnimationStart" onMouseExited="#goodRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/happy-face.png" />
          </image>
       </ImageView>
-      <Label fx:id="saveNoteLabel" layoutX="504.0" layoutY="-2.0" prefHeight="17.0" prefWidth="99.0" text="Note is saved!" textFill="WHITE" />
+      <Label fx:id="saveNoteLabel" layoutX="601.0" layoutY="2.0" prefHeight="17.0" prefWidth="99.0" text="Note is saved!" textFill="WHITE" />
       <ImageView fx:id="arrow" fitHeight="9.0" fitWidth="22.0" layoutX="7.0" layoutY="4.0" onMouseClicked="#backToMainForm" onMouseEntered="#arrowAnimationStart" onMouseExited="#arrowAnimationEnd" pickOnBounds="true" preserveRatio="true" rotate="180.0">
          <image>
             <Image url="@../../../img/arrow.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="microphone" fitHeight="28.0" fitWidth="22.0" layoutX="202.0" layoutY="339.0" onMouseClicked="#recordAudio" onMouseEntered="#micAnimationStart" onMouseExited="#micAnimationEnd" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="microphone" fitHeight="28.0" fitWidth="22.0" layoutX="249.0" layoutY="449.0" onMouseClicked="#recordAudio" onMouseEntered="#micAnimationStart" onMouseExited="#micAnimationEnd" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/mic.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="imageDrop" fitHeight="117.0" fitWidth="200.0" layoutX="438.0" layoutY="325.0" onDragDropped="#imageDrop" onDragOver="#imageDropped" pickOnBounds="true" preserveRatio="true" />
    </children>
 </AnchorPane>
