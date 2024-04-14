@@ -137,6 +137,7 @@ public class NoteController {
             notePath = reader.createNoteDirectory(path, name);
             reader.writeAndSave(note, name, notePath);
             styleService.fadeInLabel(saveNoteLabel);
+           // imageDrop.setImage(new Image(service.getImagePathByName(name)));
         } else {
             reader.writeAndSave(note, noteName, notePath);
             audioForm.setPath(notePath);
@@ -150,6 +151,10 @@ public class NoteController {
         }
     }
 
+    public void setDrop(String name){
+        imageDrop.setImage(new Image(service.getImagePathByName(name)));
+    }
+
     //Метод для прослуховування аудіо
     public void viewAudio(){
 
@@ -157,8 +162,8 @@ public class NoteController {
         if (audioFile.exists()) { //Перевірка чи існує аудіо файл і якщо він існує то тоді показується блок з аудіо
             Pane pane = new Pane();
 
-            pane.setLayoutX(26);
-            pane.setLayoutY(338);
+            pane.setLayoutX(35);
+            pane.setLayoutY(260);
             pane.setPrefHeight(48);
             pane.setPrefWidth(200);
 
@@ -203,6 +208,8 @@ public class NoteController {
 
             // Display the content of the document in the TextArea
             textArea.setText(content.toString());
+           // imageDrop.setImage(new Image(service.getImagePathByName(name)));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -263,6 +270,8 @@ public class NoteController {
         Stage stage = new Stage();
 
         application.start(stage);
+
+        ((Stage) arrow.getScene().getWindow()).close();
     }
 
     public void arrowAnimationEnd(MouseEvent mouseEvent) {
@@ -278,20 +287,28 @@ public class NoteController {
     }
 
     public void imageDrop(DragEvent dragEvent) {
-
         Dragboard dragboard = dragEvent.getDragboard();
         if(dragboard.hasImage() || dragboard.hasFiles()){
             try {
-                imageDrop.setImage(new Image(new FileInputStream(dragboard.getFiles().get(0))));
-            } catch (FileNotFoundException e) {
+                // Отримуємо перший файл з перетягування
+                File imageFile = dragboard.getFiles().get(0);
+                // Отримуємо повний шлях до файлу
+                String imageDropPath = imageFile.toURI().toURL().toExternalForm();
+
+                imageDrop.setImage(new Image(imageDropPath));
+                noteEntity.setImagePath(imageDropPath);
+
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
+
         dragEvent.consume();
     }
 
     public void imageDropped(DragEvent dragEvent) {
         Dragboard dragboard = dragEvent.getDragboard();
+
         if(dragboard.hasImage() || dragboard.hasFiles()){
             dragEvent.acceptTransferModes(TransferMode.COPY);
         }
@@ -299,6 +316,7 @@ public class NoteController {
         dragEvent.consume();
     }
 
-    //TODO зробити інтерфейс для Reader і StyleService і перенести вже нарешті цю всю єбанину на sacredProj і покомітити це все красиво
-    //TODO зробити в entity нове поле для шляху картинки і після відкриття нотатки з бази вигружати шлях для нього
+
+//    TODO зробити інтерфейс для Reader і StyleService і перенести вже нарешті цю всю єбанину на sacredProj і покомітити це все красиво
+//    TODO зробити щоб коли в textArea є картинка то або зробити щоб текста було обмежена кількість або щоб він оминав картинку
 }
