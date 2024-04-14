@@ -100,6 +100,13 @@ public class NoteController {
         textArea.setStyle("-fx-control-inner-background: #686f7a;");
         textArea.setWrapText(true);
         saveNoteLabel.setOpacity(0.0);
+
+        textArea.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (newValue.length() > 1232) {
+                textArea.setText(oldValue);
+            }
+        });
+
         // Інші дії для ініціалізації, які можуть бути потрібні
     }
 
@@ -315,6 +322,15 @@ public class NoteController {
 
         dragEvent.consume();
     }
+
+    public void setTextLimit(){
+        textArea.textProperty().addListener((obs, oldValue, newValue) -> {
+            if (newValue.length() > 1189) {
+                textArea.setText(oldValue);
+            }
+        });
+    }
+
 
 
 //    TODO зробити інтерфейс для Reader і StyleService і перенести вже нарешті цю всю єбанину на sacredProj і покомітити це все красиво

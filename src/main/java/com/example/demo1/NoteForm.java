@@ -29,6 +29,7 @@ public class NoteForm extends Application {
         stage.show();
 
         NoteController noteController = fxmlLoader.getController();
+        noteController.setTextLimit();
         noteController.setPath(path);
         noteController.setName(name);
         noteController.openNote(path, name);
