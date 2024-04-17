@@ -1,6 +1,7 @@
 package com.example.demo1.service;
 
 import com.example.demo1.interfaces.IReader;
+import javafx.scene.control.TextArea;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -75,6 +76,27 @@ public class Reader implements IReader {
             }
         }
         return null; // Повертаємо null, якщо файл не існує або виникла помилка під час зчитування
+    }
+
+    @Override
+    public void openNote(String path, String name, TextArea textArea) {
+        try {
+            // Read text from the document
+            BufferedReader reader = new BufferedReader(new FileReader(path + "/" + name + "/" + name + ".txt"));
+            StringBuilder content = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                content.append(line).append("\n");
+            }
+            reader.close();
+
+            // Display the content of the document in the TextArea
+            textArea.setText(content.toString());
+            // imageDrop.setImage(new Image(service.getImagePathByName(name)));
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 

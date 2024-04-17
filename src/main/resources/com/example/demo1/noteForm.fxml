@@ -17,16 +17,16 @@
 <!--      <Button fx:id="goodRateBTN" layoutX="494.0" layoutY="338.0" mnemonicParsing="false" onAction="#goodRateClick" prefHeight="26.0" prefWidth="26.0" text="G" />-->
       <ImageView fx:id="badRates" fitHeight="28.0" fitWidth="26.0" layoutX="551.0" layoutY="374.0" onMouseClicked="#badRateClick" onMouseEntered="#badRatesAnimationStart" onMouseExited="#badRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../img/sad-face.png" />
+            <Image url="@../../../img/sad-emoji.png" />
          </image></ImageView>
       <ImageView fx:id="normalRates" fitHeight="28.0" fitWidth="26.0" layoutX="518.0" layoutY="374.0" onMouseClicked="#normalRateClick" onMouseEntered="#normalRatesAnimationStart" onMouseExited="#normalRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../img/emoticon.png" />
+            <Image url="@../../../img/normal-emoji.png" />
          </image>
       </ImageView>
       <ImageView fx:id="goodRates" fitHeight="28.0" fitWidth="26.0" layoutX="484.0" layoutY="374.0" onMouseClicked="#goodRateClick" onMouseEntered="#goodRatesAnimationStart" onMouseExited="#goodRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../img/happy-face.png" />
+            <Image url="@../../../img/happy-emoji.png" />
          </image>
       </ImageView>
       <Label fx:id="saveNoteLabel" layoutX="601.0" layoutY="2.0" prefHeight="17.0" prefWidth="99.0" text="Note is saved!" textFill="WHITE" />

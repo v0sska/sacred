@@ -1,5 +1,7 @@
 package com.example.demo1.interfaces;
 
+import javafx.scene.control.TextArea;
+
 import java.io.IOException;
 
 public interface IReader {
@@ -15,5 +17,7 @@ public interface IReader {
     static String readConfigMemoryFile() {
         return null;
     }
+
+    void openNote(String path, String name, TextArea textArea);
 
 }

@@ -15,17 +15,17 @@
 <!--      <Button layoutX="464.0" layoutY="14.0" mnemonicParsing="false" onAction="#chooseDirectory" style="-fx-background-color: #686f7a; -fx-border-color: white;" text="Choose a directory" textFill="WHITE" />-->
       <ImageView fx:id="badRates" fitHeight="17.0" fitWidth="17.0" layoutX="430.0" layoutY="15.0" onMouseClicked="#showBadRateNotes" onMouseEntered="#badRatesAnimationStart" onMouseExited="#badRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../img/sad-face.png" />
+            <Image url="@../../../img/sad-emoji.png" />
          </image>
       </ImageView>
       <ImageView fx:id="normalRates" fitHeight="17.0" fitWidth="17.0" layoutX="395.0" layoutY="15.0" onMouseClicked="#showNormalRateNotes" onMouseEntered="#normalRatesAnimationStart" onMouseExited="#normalRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../img/emoticon.png" />
+            <Image url="@../../../img/normal-emoji.png" />
          </image>
       </ImageView>
       <ImageView fx:id="goodRates" fitHeight="17.0" fitWidth="27.0" layoutX="361.0" layoutY="15.0" onMouseClicked="#showGoodRatesNotes" onMouseEntered="#goodRatesAnimationStart" onMouseExited="#goodRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../img/happy-face.png" />
+            <Image url="@../../../img/happy-emoji.png" />
          </image>
       </ImageView>
       <Line fx:id="topLine" endX="499.0" layoutX="101.0" layoutY="56.0" startX="-100.0" stroke="WHITE" />

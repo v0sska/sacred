@@ -6,6 +6,7 @@ import com.example.demo1.RecordAudioForm;
 import com.example.demo1.entity.Note;
 import com.example.demo1.interfaces.INoteDBService;
 import com.example.demo1.interfaces.IReader;
+import com.example.demo1.interfaces.IStyleService;
 import com.example.demo1.service.AudioService;
 import com.example.demo1.service.NoteDBService;
 import com.example.demo1.service.Reader;
@@ -59,16 +60,14 @@ public class NoteController {
     @FXML
     private Label saveNoteLabel;
 
-    private StyleService styleService = new StyleService();
+    private IStyleService styleService = new StyleService();
 
     @FXML
     private AnchorPane anchorPane;
 
     private Line indicatorLine;
 
-   private RecordAudioForm audioForm = new RecordAudioForm();
-
-    //private Reader reader = new Reader();
+    private RecordAudioForm audioForm = new RecordAudioForm();
 
     private IReader reader = new Reader();
 
@@ -77,7 +76,6 @@ public class NoteController {
     private String name;
     private String path;
 
-   // private String notePath = "";
 
     public String getName() {
         return name;
@@ -101,13 +99,6 @@ public class NoteController {
         textArea.setWrapText(true);
         saveNoteLabel.setOpacity(0.0);
 
-        textArea.textProperty().addListener((obs, oldValue, newValue) -> {
-            if (newValue.length() > 1232) {
-                textArea.setText(oldValue);
-            }
-        });
-
-        // Інші дії для ініціалізації, які можуть бути потрібні
     }
 
 
@@ -123,15 +114,14 @@ public class NoteController {
 
         String noteName = getName();
 
-       String notePath = "";
+        String notePath = "";
 
-        if(readFile != null && !readFile.isEmpty()){
+        if (readFile != null && !readFile.isEmpty()) {
             notesMainPath = readFile; // Призначення основної папки,якщо існує документ з шляхом
-             notePath = reader.createNoteDirectory(notesMainPath, name);//Метод,що додає до імені запису папку для простішої індексації
-        }
-        else {
+            notePath = reader.createNoteDirectory(notesMainPath, name);//Метод,що додає до імені запису папку для простішої індексації
+        } else {
             try {
-               reader.saveConfigMemoryFile(notesMainPath);// метод для збереження в памʼяті основного шляху до папки
+                reader.saveConfigMemoryFile(notesMainPath);// метод для збереження в памʼяті основного шляху до папки
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -140,16 +130,14 @@ public class NoteController {
         System.out.println(mainPath);
 
         //Перевірка чи ця нотатка відкривалась з головного меню чи створювалась
-        if(service.noteExists(path)){
+        if (service.noteExists(path)) {
             notePath = reader.createNoteDirectory(path, name);
             reader.writeAndSave(note, name, notePath);
             styleService.fadeInLabel(saveNoteLabel);
-           // imageDrop.setImage(new Image(service.getImagePathByName(name)));
         } else {
             reader.writeAndSave(note, noteName, notePath);
             audioForm.setPath(notePath);
 
-           // Note noteEntity = new Note();
             noteEntity.setName(noteName);
             noteEntity.setPath(notesMainPath);
 
@@ -158,14 +146,14 @@ public class NoteController {
         }
     }
 
-    public void setDrop(String name){
+    public void setDrop(String name) {
         imageDrop.setImage(new Image(service.getImagePathByName(name)));
     }
 
     //Метод для прослуховування аудіо
-    public void viewAudio(){
+    public void viewAudio() {
 
-        File audioFile = new File( path + "/" + name + "/sacred_audio.wav"); // аудіо файл
+        File audioFile = new File(path + "/" + name + "/sacred_audio.wav"); // аудіо файл
         if (audioFile.exists()) { //Перевірка чи існує аудіо файл і якщо він існує то тоді показується блок з аудіо
             Pane pane = new Pane();
 
@@ -174,9 +162,17 @@ public class NoteController {
             pane.setPrefHeight(48);
             pane.setPrefWidth(200);
 
-            Button playButton = new Button("Відтворити");
-            playButton.setLayoutX(80);
+           // ImageView playButton = new ImageView(new Image("src/main/resources/img/play-button.png"));
+
+            Button playButton = new Button("Play audio");
+
+            playButton.setLayoutX(55);
             playButton.setLayoutY(21);
+            playButton.setStyle("-fx-background-color: #686f7a; -fx-border-color: white;");
+            playButton.setTextFill(Color.WHITE);
+
+
+            playButton.setOnMouseEntered(event -> styleService.transitionStart(playButton));
 
             playButton.setOnAction(e -> {
                 try {
@@ -187,6 +183,8 @@ public class NoteController {
                     ex.printStackTrace();
                 }
             });
+
+            playButton.setOnMouseExited(event -> styleService.transitionFinish(playButton));
 
             indicatorLine = new Line(-100, 14, 100, 14);
             indicatorLine.setStroke(Color.WHITE);
@@ -199,27 +197,12 @@ public class NoteController {
             System.out.println("Файл не існує");
         }
 
+
     }
 
     //Метод для відкриття нотатки
-    public void openNote(String path, String name){
-        try {
-            // Read text from the document
-            BufferedReader reader = new BufferedReader(new FileReader(path + "/" + name + "/" + name + ".txt"));
-            StringBuilder content = new StringBuilder();
-            String line;
-            while ((line = reader.readLine()) != null) {
-                content.append(line).append("\n");
-            }
-            reader.close();
-
-            // Display the content of the document in the TextArea
-            textArea.setText(content.toString());
-           // imageDrop.setImage(new Image(service.getImagePathByName(name)));
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void openNote(String path, String name) {
+        reader.openNote(path, name, textArea);
     }
 
     //Метод який відкриває RecordAudioForm
@@ -227,7 +210,6 @@ public class NoteController {
         Stage stage = new Stage();
         audioForm.start(stage);
     }
-
 
 
     //Методи для оцінювання нотаток
@@ -295,7 +277,7 @@ public class NoteController {
 
     public void imageDrop(DragEvent dragEvent) {
         Dragboard dragboard = dragEvent.getDragboard();
-        if(dragboard.hasImage() || dragboard.hasFiles()){
+        if (dragboard.hasImage() || dragboard.hasFiles()) {
             try {
                 // Отримуємо перший файл з перетягування
                 File imageFile = dragboard.getFiles().get(0);
@@ -316,23 +298,19 @@ public class NoteController {
     public void imageDropped(DragEvent dragEvent) {
         Dragboard dragboard = dragEvent.getDragboard();
 
-        if(dragboard.hasImage() || dragboard.hasFiles()){
+        if (dragboard.hasImage() || dragboard.hasFiles()) {
             dragEvent.acceptTransferModes(TransferMode.COPY);
         }
 
         dragEvent.consume();
     }
 
-    public void setTextLimit(){
+    public void setTextLimit() {
         textArea.textProperty().addListener((obs, oldValue, newValue) -> {
-            if (newValue.length() > 1189) {
+            if (newValue.length() > 1130) {
                 textArea.setText(oldValue);
             }
         });
     }
 
-
-
-//    TODO зробити інтерфейс для Reader і StyleService і перенести вже нарешті цю всю єбанину на sacredProj і покомітити це все красиво
-//    TODO зробити щоб коли в textArea є картинка то або зробити щоб текста було обмежена кількість або щоб він оминав картинку
 }

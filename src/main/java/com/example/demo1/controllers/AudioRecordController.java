@@ -1,5 +1,6 @@
 package com.example.demo1.controllers;
 
+import com.example.demo1.interfaces.IStyleService;
 import com.example.demo1.service.StyleService;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,7 +26,7 @@ public class AudioRecordController implements Initializable {
     @FXML
     private ImageView stopRecordButton;
 
-    private StyleService styleService = new StyleService();
+    private IStyleService styleService = new StyleService();
 
     private TargetDataLine targetDataLine;
 

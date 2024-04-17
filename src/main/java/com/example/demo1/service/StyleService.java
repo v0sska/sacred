@@ -1,5 +1,6 @@
 package com.example.demo1.service;
 
+import com.example.demo1.interfaces.IStyleService;
 import javafx.animation.FadeTransition;
 import javafx.animation.ScaleTransition;
 import javafx.scene.control.Button;
@@ -7,7 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-public class StyleService {
+public class StyleService implements IStyleService {
     public void transitionStart(Button button) {
         ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), button);
         scaleTransition.setToX(1.2);

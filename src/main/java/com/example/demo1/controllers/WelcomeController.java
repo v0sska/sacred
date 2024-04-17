@@ -186,7 +186,7 @@ public class WelcomeController {
 
                     button.setStyle("-fx-background-color: #686f7a; -fx-border-color: white;");
                     button.setTextFill(Color.WHITE);
-                    button.setUserData("dynamicButton"); // Встановлення userData для динамічних кнопок
+                   // button.setUserData("dynamicButton"); // Встановлення userData для динамічних кнопок
 
                     button.setOnMouseEntered(event -> styleService.transitionStart(button));
                     button.setOnAction(event -> {
