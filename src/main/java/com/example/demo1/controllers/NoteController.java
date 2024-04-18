@@ -39,6 +39,8 @@ public class NoteController {
     @FXML
     private ImageView imageDrop;
 
+    @FXML
+    private Button writeButton;
 
     @FXML
     private ImageView badRates;
@@ -253,16 +255,6 @@ public class NoteController {
         styleService.transitionStart(arrow);
     }
 
-    public void backToMainForm(MouseEvent mouseEvent) throws IOException {
-        WelcomeForm application = new WelcomeForm();
-
-        Stage stage = new Stage();
-
-        application.start(stage);
-
-        ((Stage) arrow.getScene().getWindow()).close();
-    }
-
     public void arrowAnimationEnd(MouseEvent mouseEvent) {
         styleService.transitionFinish(arrow);
     }
@@ -273,6 +265,20 @@ public class NoteController {
 
     public void micAnimationEnd(MouseEvent mouseEvent) {
         styleService.transitionFinish(microphone);
+    }
+
+    public void writeButtonAnimationStart(MouseEvent mouseEvent) {styleService.transitionStart(writeButton);}
+
+    public void writeButtonAnimationEnd(MouseEvent mouseEvent) {styleService.transitionFinish(writeButton);}
+
+    public void backToMainForm(MouseEvent mouseEvent) throws IOException {
+        WelcomeForm application = new WelcomeForm();
+
+        Stage stage = new Stage();
+
+        application.start(stage);
+
+        ((Stage) arrow.getScene().getWindow()).close();
     }
 
     public void imageDrop(DragEvent dragEvent) {
