@@ -36,7 +36,6 @@ public class NoteForm extends Application {
         noteController.viewAudio();
         noteController.setDrop(name);
 
-
     }
 }
 

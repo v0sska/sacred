@@ -1,13 +1,9 @@
 package com.example.demo1.controllers;
 
 import com.example.demo1.NoteForm;
-import com.example.demo1.entity.Note;
 import com.example.demo1.interfaces.INoteDBService;
 import com.example.demo1.service.NoteDBService;
 import com.example.demo1.service.StyleService;
-import com.mysql.cj.protocol.x.XProtocolRow;
-import javafx.animation.ScaleTransition;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,10 +17,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 public class WelcomeController {

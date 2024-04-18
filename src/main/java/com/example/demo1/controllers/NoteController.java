@@ -1,6 +1,6 @@
 package com.example.demo1.controllers;
 
-import com.example.demo1.HelloApplication;
+import com.example.demo1.WelcomeForm;
 import com.example.demo1.entity.Rate;
 import com.example.demo1.RecordAudioForm;
 import com.example.demo1.entity.Note;
@@ -254,7 +254,7 @@ public class NoteController {
     }
 
     public void backToMainForm(MouseEvent mouseEvent) throws IOException {
-        HelloApplication application = new HelloApplication();
+        WelcomeForm application = new WelcomeForm();
 
         Stage stage = new Stage();
 
