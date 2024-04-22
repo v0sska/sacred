@@ -1,6 +1,9 @@
-This project is writed on ZuluJDK 21.0.2 with JavaFX modules for non-modularity.
-In project used a SQLite database.
-You can create +- 40 notes and length of note is 1130 chars.
-Project requires to select folder for notes and after project create a main folder with name sacred.
-Also project will create in main folder another folders with names of notes for simpler indexing files.
-In project you can record audio and listening it and put images in note using drag and drop.
+This project is written on ZuluJDK 21.0.2 with JavaFX modules for non-modularity with the usage of SQLite database.
+You can create approximately 40 notes with their length of 1130 chars.
+Project requires to select your folder for notes and after this the project will create a main folder with the name "sacred".
+
+Example:
+          /Users/your_user/Desktop/your_folder/sacred/name_of_note
+  
+Also the project will create another folders with names of notes for the simpler process of indexing files.
+In this project you can record audio and listen to it; put images in note using the principle of drag and drop.
