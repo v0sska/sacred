@@ -164,8 +164,6 @@ public class NoteController {
             pane.setPrefHeight(48);
             pane.setPrefWidth(200);
 
-           // ImageView playButton = new ImageView(new Image("src/main/resources/img/play-button.png"));
-
             Button playButton = new Button("Play audio");
 
             playButton.setLayoutX(55);

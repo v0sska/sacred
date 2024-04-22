@@ -6,24 +6,6 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="66.0" prefWidth="357.0" style="-fx-background-color: #686f7a;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo1.controllers.AudioRecordController">
    <children>
-<!--      <ImageView fx:id="imageView"  fitHeight="40.0" fitWidth="27.0" layoutX="165.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">-->
-<!--         <image>-->
-<!--            <Image url="@../../../img/stop-button.png" />-->
-<!--         </image>-->
-<!--         <onMouseClicked>-->
-<!--           <fx:reference source="stop"></fx:reference>-->
-<!--         </onMouseClicked>-->
-<!--      </ImageView>-->
-
-<!--      <ImageView fx:id="imageView" fitHeight="40.0" fitWidth="27.0" layoutX="165.0" layoutY="33.0" pickOnBounds="true" preserveRatio="true">-->
-<!--         <image>-->
-<!--            <Image url="@../../../img/stop-button.png" />-->
-<!--         </image>-->
-<!--      </ImageView>-->
-
-<!--      <Button layoutX="156.0" layoutY="25.0" mnemonicParsing="false" onAction="#stop" prefHeight="40.0" prefWidth="49.0" style="-fx-background-color: #686f7a;" />-->
-
-
        <Label fx:id="label" layoutX="152.0" layoutY="6.0" prefHeight="17.0" prefWidth="65.0" text="Recording" textFill="WHITE" />
          <ImageView fx:id="stopRecordButton" fitHeight="40.0" fitWidth="27.0" layoutX="167.0" layoutY="35.0" onMouseClicked="#stop" onMouseEntered="#stopRecordAnimationStart" onMouseExited="#stopRecordAnimationEnd" pickOnBounds="true" preserveRatio="true">
              <image>

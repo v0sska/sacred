@@ -8,10 +8,6 @@
    <children>
       <TextArea fx:id="textArea" layoutX="-3.0" layoutY="15.0" prefHeight="300.0" prefWidth="706.0" style="-fx-border-color: #686f7a; -fx-text-box-border: transparent; -fx-highlight-fill: #686f7a; -fx-highlight-text-fill: white;" />
       <Button fx:id="writeButton" layoutX="296.0" layoutY="373.0" mnemonicParsing="false" onAction="#writeButton" onMouseEntered="#writeButtonAnimationStart" onMouseExited="#writeButtonAnimationEnd" style="-fx-background-color: #686f7a; -fx-border-color: white;" text="Complete a note" textFill="WHITE" />
-<!--      <Button layoutX="362.0" layoutY="338.0" mnemonicParsing="false" onAction="#recordAudio" text="Record" />-->
-<!--      <Button fx:id="badRateBtn" layoutX="561.0" layoutY="338.0" mnemonicParsing="false" onAction="#badRateClick" prefHeight="26.0" prefWidth="25.0" text="B" />-->
-<!--      <Button fx:id="normalRateBTn" layoutX="529.0" layoutY="338.0" mnemonicParsing="false" onAction="#normalRateClick" prefHeight="26.0" prefWidth="26.0" text="N" />-->
-<!--      <Button fx:id="goodRateBTN" layoutX="494.0" layoutY="338.0" mnemonicParsing="false" onAction="#goodRateClick" prefHeight="26.0" prefWidth="26.0" text="G" />-->
       <ImageView fx:id="badRates" fitHeight="28.0" fitWidth="26.0" layoutX="551.0" layoutY="374.0" onMouseClicked="#badRateClick" onMouseEntered="#badRatesAnimationStart" onMouseExited="#badRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/sad-emoji.png" />

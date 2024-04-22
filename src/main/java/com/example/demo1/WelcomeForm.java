@@ -25,8 +25,6 @@ public class WelcomeForm extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(WelcomeForm.class.getResource("welcome.fxml"));
         Parent root = fxmlLoader.load();
 
-
-        // Отримуємо контролер FXML
         WelcomeController controller = fxmlLoader.getController();
 
         // Додаємо кнопки до GridPane через контролер

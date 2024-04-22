@@ -11,8 +11,7 @@
    <children>
       <Label fx:id="writeNoteButton" />
       <Button fx:id="createButton" layoutX="324.0" layoutY="14.0" mnemonicParsing="false" onAction="#openNoteForm" onMouseEntered="#transitionStart" onMouseExited="#transitionFinish" style="-fx-background-color: #686f7a; -fx-border-color: white;" text="+" textFill="WHITE" />
-<!--      <Label fx:id="chooseDirectoryButton" />-->
-<!--      <Button layoutX="464.0" layoutY="14.0" mnemonicParsing="false" onAction="#chooseDirectory" style="-fx-background-color: #686f7a; -fx-border-color: white;" text="Choose a directory" textFill="WHITE" />-->
+
       <ImageView fx:id="badRates" fitHeight="17.0" fitWidth="17.0" layoutX="430.0" layoutY="15.0" onMouseClicked="#showBadRateNotes" onMouseEntered="#badRatesAnimationStart" onMouseExited="#badRatesAnimationEnd" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/sad-emoji.png" />

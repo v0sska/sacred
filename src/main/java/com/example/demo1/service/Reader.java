@@ -92,7 +92,6 @@ public class Reader implements IReader {
 
             // Display the content of the document in the TextArea
             textArea.setText(content.toString());
-            // imageDrop.setImage(new Image(service.getImagePathByName(name)));
 
         } catch (IOException e) {
             e.printStackTrace();

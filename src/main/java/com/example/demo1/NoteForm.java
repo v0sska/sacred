@@ -24,7 +24,6 @@ public class NoteForm extends Application {
     public void start(Stage stage) throws Exception {
         FXMLLoader fxmlLoader = new FXMLLoader(NoteForm.class.getResource("noteForm.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 700, 440);
-        stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();
 
